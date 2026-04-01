@@ -2,7 +2,7 @@
     "name": "i18nlanguagehinter",
     "displayName": "i18nLanguageHinter",
     "description": "Based on the selected dictionary in the JSON file, inline hints are generated next to the keys that appear in the text. This is particularly useful when working with the i18n library.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "engines": {
         "vscode": "^1.107.0"
     },
