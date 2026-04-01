@@ -1,0 +1,42 @@
+{
+    "name": "i18nlanguagehinter",
+    "displayName": "i18nLanguageHinter",
+    "description": "Based on the selected dictionary in the JSON file, inline hints are generated next to the keys that appear in the text. This is particularly useful when working with the i18n library.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.107.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "i18nlanguagehinter.selectDictionaryFile",
+                "title": "i18n Language Hinter: Select dictionary file"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src",
+        "test": "vscode-test"
+    },
+    "devDependencies": {
+        "@types/vscode": "1.107.0",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "22.x",
+        "typescript-eslint": "^8.56.1",
+        "eslint": "^9.39.3",
+        "typescript": "^5.9.3",
+        "@vscode/test-cli": "^0.0.12",
+        "@vscode/test-electron": "^2.5.2"
+    }
+}
