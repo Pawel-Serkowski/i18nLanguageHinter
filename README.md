@@ -43,8 +43,9 @@ All the most important options can be handled quickly without using a mouse! Pre
 
 | Command                                    | Action upon execution                                                                                                                                              |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `i18n: Show as menu (quick choice)`        | Perfect for keyboard enthusiasts! Opens a central `QuickPick` Menu with a search bar, allowing you to select files or change the folder using the keyboard arrows. |
+| `i18n: Select dictionary file`             | Perfect for keyboard enthusiasts! Opens a central `QuickPick` Menu with a search bar, allowing you to select files or change the folder using the keyboard arrows. |
 | `i18n: Select different dictionary folder` | A quick global shortcut to instantly open the system dialog window to set a new base directory for your files.                                                     |
+| `View: Focus i18n Language Hinter`         | Native IDE command. Opens and focuses the dedicated sidebar panel directly from your keyboard.                                                                     |
 
 ---
 
