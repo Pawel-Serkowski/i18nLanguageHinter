@@ -3,8 +3,10 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { loadDictionaryFile } from "../utils/loadDictionary";
+import { changeDictionaryFolder } from "../utils/changeDictionary";
+import { DictionaryTreeProvider } from "../providers/DictionaryTreeProvider";
 
-export const selectDictionaryCommand = (context: vscode.ExtensionContext) =>
+export const selectDictionaryCommand = (context: vscode.ExtensionContext, treeProvider: DictionaryTreeProvider) =>
     vscode.commands.registerCommand("i18nlanguagehinter.selectDictionaryFile", async () => {
         const savedFolder = context.workspaceState.get<string>("i18nhinter.dictionaryFolder") || "";
         const items: vscode.QuickPickItem[] = [];
@@ -40,18 +42,8 @@ export const selectDictionaryCommand = (context: vscode.ExtensionContext) =>
         if (!selectedItem) return;
 
         if (selectedItem.label.includes("$(folder)")) {
-            const folderUris = await vscode.window.showOpenDialog({
-                canSelectFolders: true,
-                canSelectMany: false,
-                openLabel: "Save as dictionaries folder",
-            });
-
-            if (folderUris && folderUris[0]) {
-                const newFolderPath = folderUris[0].fsPath;
-
-                await context.workspaceState.update("i18nhinter.dictionaryFolder", newFolderPath);
-                vscode.window.showInformationMessage("Folder successfully saved, run command once again!");
-            }
+            await changeDictionaryFolder(context, treeProvider);
+            vscode.window.showInformationMessage("Folder successfully saved, run command once again!");
         } else {
             const fileName = selectedItem.label.replace("$(json) ", "");
             console.log(fileName);

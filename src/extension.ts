@@ -3,8 +3,10 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { I18nInlayHintsProvider } from "./providers/I18nInlayProvider";
-import { selectDictionaryCommand } from "./commands/selectDictionaryCommand";
+import { DictionaryTreeProvider } from "./providers/DictionaryTreeProvider";
 import { pluginSetup } from "./utils/loadDictionary";
+
+import { loadLanguageCommand, selectDictionaryCommand, changeFolderCommand } from "./commands";
 
 export const i18nProvider = new I18nInlayHintsProvider();
 export let dictionaryMap = new Map<string, string>();
@@ -25,7 +27,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     forceReloadInlayHints();
 
-    context.subscriptions.push(selectDictionaryCommand(context));
+    const treeProvider = new DictionaryTreeProvider(context);
+    vscode.window.registerTreeDataProvider("i18n-files-view", treeProvider);
+
+    context.subscriptions.push(selectDictionaryCommand(context, treeProvider));
+    context.subscriptions.push(changeFolderCommand(context, treeProvider));
+    context.subscriptions.push(loadLanguageCommand(context, treeProvider));
 }
 
 // This method is called when your extension is deactivated

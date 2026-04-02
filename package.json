@@ -2,7 +2,7 @@
     "name": "i18nlanguagehinter",
     "displayName": "i18nLanguageHinter",
     "description": "Based on the selected dictionary in the JSON file, inline hints are generated next to the keys that appear in the text. This is particularly useful when working with the i18n library.",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "engines": {
         "vscode": "^1.107.0"
     },
@@ -10,7 +10,10 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "onLanguage:javascript",
+        "onLanguage:javascriptreact",
+        "onLanguage:typescript",
+        "onLanguage:typescriptreact"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -18,8 +21,44 @@
             {
                 "command": "i18nlanguagehinter.selectDictionaryFile",
                 "title": "i18n Language Hinter: Select dictionary file"
+            },
+            {
+                "command": "i18nlanguagehinter.changeFolderCmd",
+                "title": "i18n Language Hinter: Select different dictionary folder",
+                "icon": "$(folder-opened)"
+            },
+            {
+                "command": "i18nlanguagehinter.loadLanguageCmd",
+                "title": "i18n Language Hinter: load clicked language file"
             }
-        ]
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "i18n-plugin-explorer",
+                    "title": "i18n Dictionaries",
+                    "icon": "$(library)"
+                }
+            ]
+        },
+        "views": {
+            "i18n-plugin-explorer": [
+                {
+                    "id": "i18n-files-view",
+                    "name": "Language Files",
+                    "icon": "$(folder)"
+                }
+            ]
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "i18nlanguagehinter.changeFolderCmd",
+                    "when": "view == i18n-files-view",
+                    "group": "navigation"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
