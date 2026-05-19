@@ -2,7 +2,7 @@
 
 > A highly performant, native IDE extension for Antigravity & VS Code that provides on-the-fly, inline translations for your `i18n` keys using VS Code's rich **Inlay Hints API**.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 ![Environment](https://img.shields.io/badge/environment-Antigravity%20%7C%20VS%20Code-orange.svg)
 
