@@ -34,7 +34,9 @@ export class DictionaryTreeProvider implements vscode.TreeDataProvider<Dictionar
     }
 
     getChildren(element?: DictionaryItem): Thenable<DictionaryItem[]> {
-        if (element) return Promise.resolve([]);
+        if (element) {
+            return Promise.resolve([]);
+        }
 
         const folder = this.context.workspaceState.get<string>("i18nhinter.dictionaryFolder");
         const activeFile = this.context.workspaceState.get<string>("i18nhinter.activeFile");

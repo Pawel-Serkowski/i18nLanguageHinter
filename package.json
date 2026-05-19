@@ -2,7 +2,7 @@
     "name": "i18nlanguagehinter",
     "displayName": "i18nLanguageHinter",
     "description": "Based on the selected dictionary in the JSON file, inline hints are generated next to the keys that appear in the text. This is particularly useful when working with the i18n library.",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "engines": {
         "vscode": "^1.107.0"
     },
@@ -18,6 +18,26 @@
     ],
     "main": "./out/extension.js",
     "contributes": {
+        "configuration": {
+            "title": "i18n Language Hinter",
+            "properties": {
+                "i18nLanguageHinter.keyPattern": {
+                    "type": "string",
+                    "default": "id_[\\w-]+",
+                    "description": "Regular expression pattern to find translation keys in document text."
+                },
+                "i18nLanguageHinter.hintPrefix": {
+                    "type": "string",
+                    "default": " :",
+                    "description": "Prefix text displayed before the translation hint."
+                },
+                "i18nLanguageHinter.maxHintLength": {
+                    "type": "number",
+                    "default": 40,
+                    "description": "Maximum character length of the translation text shown in the inlay hint before truncation."
+                }
+            }
+        },
         "commands": [
             {
                 "command": "i18nlanguagehinter.selectDictionaryFile",

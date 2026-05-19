@@ -10,22 +10,23 @@ import { loadLanguageCommand, selectDictionaryCommand, changeFolderCommand } fro
 
 export const i18nProvider = new I18nInlayHintsProvider();
 export let dictionaryMap = new Map<string, string>();
+export let outputChannel: vscode.OutputChannel;
 
-let activeProviderDisposable: vscode.Disposable | undefined;
 export function forceReloadInlayHints() {
-    if (activeProviderDisposable) {
-        activeProviderDisposable.dispose();
-    }
-    activeProviderDisposable = vscode.languages.registerInlayHintsProvider(
-        ["javascript", "typescript", "javascriptreact", "typescriptreact"],
-        i18nProvider,
-    );
+    i18nProvider.refreshHints();
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    outputChannel = vscode.window.createOutputChannel("i18n Language Hinter");
+    context.subscriptions.push(outputChannel);
+
     pluginSetup(context);
 
-    forceReloadInlayHints();
+    const providerDisposable = vscode.languages.registerInlayHintsProvider(
+        ["javascript", "typescript", "javascriptreact", "typescriptreact"],
+        i18nProvider,
+    );
+    context.subscriptions.push(providerDisposable);
 
     const treeProvider = new DictionaryTreeProvider(context);
     vscode.window.registerTreeDataProvider("i18n-files-view", treeProvider);
@@ -33,6 +34,14 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(selectDictionaryCommand(context, treeProvider));
     context.subscriptions.push(changeFolderCommand(context, treeProvider));
     context.subscriptions.push(loadLanguageCommand(context, treeProvider));
+
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeConfiguration((e) => {
+            if (e.affectsConfiguration("i18nLanguageHinter")) {
+                i18nProvider.refreshHints();
+            }
+        })
+    );
 }
 
 // This method is called when your extension is deactivated

@@ -9,9 +9,11 @@ export async function selectDefaultDictionaryFile(context: vscode.ExtensionConte
         const files = fs.readdirSync(folderPath);
         const jsonFiles = files.filter((f) => f.endsWith(".json"));
 
-        if (jsonFiles.length === 0) return;
+        if (jsonFiles.length === 0) {
+            return;
+        }
 
-        const fileName = jsonFiles.find((file) => file == "en-US.json") ? "en-US.json" : jsonFiles[0];
+        const fileName = jsonFiles.find((file) => file === "en-US.json") ? "en-US.json" : jsonFiles[0];
         const fullPath = path.join(folderPath, fileName);
         loadDictionaryFile(fullPath);
         await context.workspaceState.update("i18nhinter.activeFile", fullPath);
@@ -23,7 +25,7 @@ export async function selectDefaultDictionaryFile(context: vscode.ExtensionConte
 export async function changeDictionaryFolder(
     context: vscode.ExtensionContext,
     treeProvider: DictionaryTreeProvider,
-) {
+): Promise<boolean> {
     const folderUris = await vscode.window.showOpenDialog({
         canSelectFolders: true,
         canSelectMany: false,
@@ -36,5 +38,7 @@ export async function changeDictionaryFolder(
         await context.workspaceState.update("i18nhinter.dictionaryFolder", newFolderPath);
         await selectDefaultDictionaryFile(context, newFolderPath);
         treeProvider.refresh();
+        return true;
     }
+    return false;
 }
